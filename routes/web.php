@@ -1,8 +1,14 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use Whoops\Run;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use PharIo\Manifest\AuthorCollection;
+use App\Http\Controllers\AuthController;
+
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\admin\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +22,7 @@ use PharIo\Manifest\AuthorCollection;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 Route::middleware([
@@ -25,7 +31,7 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('admin/master');
     })->name('dashboard');
 });
 
@@ -40,3 +46,37 @@ Route::get('/auth/google/callback',[AuthController::class,'googleCallback'])->na
 // for facebook 
 Route::get('/auth/facebook/redirect',[AuthController::class,'facebookRedirect'])->name('facebook@redirect');
 Route::get('/auth/facebook/callback',[AuthController::class,'facebookCallback'])->name('facebook@callback');
+
+// admin
+
+Route::prefix('admin/')->group(function(){
+    Route::get('list',[AdminController::class,'adminList'])->name('admin@adminList');
+    Route::get('datatable/ssd',[AdminController::class,'ssd']);
+    Route::get('profile',[AdminController::class,'profile'])->name('admin@profile');
+    Route::get('changeProfile',[AdminController::class,'changeProfile'])->name('admin@changeProfile');
+    Route::post('changeProfile/{id}',[AdminController::class,'Change'])->name('admin@change');
+    Route::get('change/password',[AdminController::class,'changePasswordPage'])->name('admin@changePasswordPage');
+    Route::post('changePassword',[AdminController::class,'ChangePassword'])->name('admin@changePassword');
+
+    // category list
+    Route::get('categroy/list',[CategoryController::class,'categoryList'])->name('admin@categoryList');
+    Route::get('category/create',[CategoryController::class,'categoryCreatePage'])->name('admin@categoryCreatePage');
+    Route::post('category/create',[CategoryController::class,'categoryCreate'])->name('admin@categoryCreate');
+    Route::get('category/delete/{id}',[CategoryController::class,'categoryDelete'])->name('admin@categoryDelete');
+    Route::get('category/editPage',[CategoryController::class,'editPage'])->name('admin@editPage');
+    Route::post('category/edit/{id}',[CategoryController::class,'categoryEdit'])->name('admin@categoryEdit');
+
+    // post
+    Route::get('post/list',[PostController::class,'postList'])->name('admin@postList');
+    Route::get('post/create',[PostController::class,'index'])->name('admin@postIndex');
+    Route::post('post/create',[PostController::class,'Create'])->name('admin@postCreate');
+    Route::get('post/delete/{id}',[PostController::class,'postDelete'])->name('admin@postDelete');
+    Route::get('post/editPage{id}',[PostController::class,'postEditPage'])->name('admin@postEditPage');
+    Route::post('post/update/{id}',[PostController::class,'postUpdate'])->name('admin@postUpdate');
+    Route::get('post/details/{id}',[PostController::class,'postDetails'])->name('admin@postDetails');
+
+    Route::get('allPost',[PostController::class,'allPost'])->name('admin@allPost');
+});
+
+// delete admin account
+Route::get('/user/{user}/delete',[AdminController::class,'destory']);

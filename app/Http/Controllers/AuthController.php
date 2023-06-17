@@ -23,6 +23,7 @@ class AuthController extends Controller
 
         $user = User::where('email' , $userData->email)->where('social','gitHub')->first();
 
+    
         if($user){
             Auth::login($user);
             return redirect('/dashboard');
@@ -31,6 +32,7 @@ class AuthController extends Controller
             $user  =  new User();
             $user->name = $userData->name;
             $user->email = $userData->email;
+            $user->phone = $userData->phone;
             $user->password = Hash::make($uuid.now());
             $user->social = "gitHub";
             $user->save();

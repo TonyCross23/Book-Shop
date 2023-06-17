@@ -1,8 +1,7 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
-        </x-slot>
+          
 
         <x-jet-validation-errors class="mb-4" />
 
@@ -32,7 +31,10 @@
                 </x-jet-button>
             </div>
         </form>
-        
+        <a href="{{ route('register') }}">
+            <span>Create Account?</span>
+        </a>
+        <span class="d-flex justify-content-center mt-3">or</span>
      <div class="row mt-4">
         <div class="col-4">
             <a href="{{ route('github@redirect') }}">
