@@ -16,7 +16,7 @@ class CategoryController extends Controller
                                             $query->where('title','like','%'.request('key').'%');
                                             })
                                             ->orderBy('id','desc')
-                                            ->paginate(10);
+                                            ->paginate(5);
         return view ('admin.category.list',compact('category'));
     }
 
@@ -57,7 +57,7 @@ class CategoryController extends Controller
 
     // category edit
     public function categoryEdit ($id,Request $request) {
-        $validator = $this->getValidationCheck ($request);
+        $validator = $this->editValidationCheck ($request);
         $data = $this->getCategoryData($request);
  
         if ($validator->fails()) {
@@ -67,7 +67,7 @@ class CategoryController extends Controller
         }
         $category = Category::where('id',$id)->update($data);
 
-        return back()->with(["Success" => 'Edit Success']);
+        return redirect()->route('admin@categoryList')->with(["success" => 'Edit Success']);
     }
 
     private function getCategoryData ($request){
@@ -79,6 +79,11 @@ class CategoryController extends Controller
     private function getValidationCheck ($request){
         return  Validator::make($request->all(), [
             'categoryTitle' => 'required|max:55|unique:categories,title',
+        ]);
+    }
+    private function editValidationCheck ($request){
+        return  Validator::make($request->all(), [
+            'categoryTitle' => 'max:55|unique:categories,title',
         ]);
     }
 }

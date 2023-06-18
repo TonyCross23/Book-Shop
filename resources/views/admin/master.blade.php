@@ -52,7 +52,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
 
                 </div>
-                <span class="sidebar-brand-text mx-1">Order System</span>
+                <span class="sidebar-brand-text mx-1">Book Shop</span>
             </a>
 
             <!-- Divider -->
@@ -323,6 +323,14 @@
                 confirmButtonText: 'Continue'
             });
         @endif
+
+        @if (session('success'))
+            Toast.fire({
+                icon: 'success',
+                title: '{{ session('success') }}',
+            })
+        @endif
+        
 
         @yield('script')
     </script>

@@ -78,5 +78,8 @@ Route::prefix('admin/')->group(function(){
     Route::get('allPost',[PostController::class,'allPost'])->name('admin@allPost');
 });
 
+// edit admin acount
+Route::get('/user/{user}/edit',[AdminController::class,'edit']);
+
 // delete admin account
 Route::get('/user/{user}/delete',[AdminController::class,'destory']);

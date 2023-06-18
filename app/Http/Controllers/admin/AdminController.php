@@ -26,11 +26,15 @@ class AdminController extends Controller
 
         return DataTables::of($users)
                     ->addColumn('action',function($user){
-                        return '<a href="#" class="btn btn-danger text-white delete" data-id=" '.$user->id.' ">Delete</a>';
+                      if($user->id != Auth::user()->id){
+                          return '<a href="#" class="btn btn-danger text-white delete" data-id=" '.$user->id.' ">Delete</a>';             
+                      }
                     })
+                    ->rawColumns(['action'])
                     ->make(true);
     }
 
+    // admin user account delete
     public function destory (User $user){
         $user->delete();
         return 'success';
@@ -98,7 +102,7 @@ public function changePassword (Request $request){
         ];
 
         User::where('id',Auth::user()->id)->update($data);
-        return back()->with(['success' => 'Success']);
+        return back()->with('success' , 'Successfuly Changed Password');
     }
 
     return back()->with(['notMatch' => 'The Old Password not Match. Try Again!']);

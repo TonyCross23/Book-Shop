@@ -122,7 +122,6 @@ class PostController extends Controller
             'category_id' => $request->postCategoryName,
             'description' => $request->postDescription,
             'created_at' => Carbon::now()->diffForHumans(),
-
         ];
     }
 

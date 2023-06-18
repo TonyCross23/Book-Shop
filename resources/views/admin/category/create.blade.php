@@ -4,15 +4,6 @@
 
 @section('content')
     <div class="container col-8 offset-2">
-        {{-- 
-        @if (session('Success'))
-            <div class="col-12">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="fa-solid fa-check me-2"></i> {{ session('Success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-        @endif --}}
 
         <div class="card">
             <div class="card-header">
